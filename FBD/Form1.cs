@@ -19,6 +19,9 @@ namespace FBD
             lista_pessoas.Columns.Add("Nome", 100, HorizontalAlignment.Left);
             lista_pessoas.Columns.Add("Morada", 100, HorizontalAlignment.Left);
             lista_pessoas.Columns.Add("Telefone", 100, HorizontalAlignment.Left);
+
+            carregar_pessoas();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -33,16 +36,36 @@ namespace FBD
             try
             {
                 Conexao = new MySqlConnection(data_source);
-                string sql = "insert into clientes (nome, morada, telefone) " +
-                             "values('" + txtNome.Text + "', '" + txtMorada.Text + "', '" + txtTelefone.Text + "') ";
-                MySqlCommand cmd = new MySqlCommand(sql, Conexao);
+
                 Conexao.Open();
-                cmd.ExecuteReader();
+
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Connection = Conexao;
+
+                cmd.CommandText = "insert into clientes (nome, morada, telefone) " +
+                                  "values " +
+                                  "(@nome, @morada, @telefone) ";
+
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                cmd.Parameters.AddWithValue("@morada", txtMorada.Text);
+                cmd.Parameters.AddWithValue("@telefone", txtTelefone.Text);
+
+                cmd.ExecuteNonQuery();
+                
                 MessageBox.Show("Inserido");
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro " + ex.Number + " ocorreu: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Erro ocorreu: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -56,13 +79,25 @@ namespace FBD
             {
                 try
                 {
-                    string q = "'%" + txtBuscar.Text + "%'";
+
                     Conexao = new MySqlConnection(data_source);
-                    string sql = "select * from funcionarios where nome like " + q;
                     Conexao.Open();
-                    MySqlCommand cmd = new MySqlCommand(sql, Conexao);
+
+                    MySqlCommand cmd = new MySqlCommand();
+
+                    cmd.Connection = Conexao;
+
+                    cmd.CommandText = "select * from funcionarios where nome like @q or morada like @q or categoria like @q";
+
+                    cmd.Parameters.Clear();
+
+                    cmd.Parameters.AddWithValue("@q", "%" + txtBuscar.Text + "%");
+
+
                     MySqlDataReader reader = cmd.ExecuteReader();
+
                     lista_pessoas.Items.Clear();
+
                     while (reader.Read())
                     {
                         string[] row =
@@ -73,14 +108,20 @@ namespace FBD
                         reader.GetString(3),
                         reader.GetString(4),
                     };
-                        var linha_listview = new ListViewItem(row);
 
-                        lista_pessoas.Items.Add(linha_listview);
+                        lista_pessoas.Items.Add(new ListViewItem(row));
+
                     }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Erro " + ex.Number + " ocorreu: " + ex.Message,
+                                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Erro ocorreu: " + ex.Message,
+                                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
@@ -91,13 +132,25 @@ namespace FBD
             {
                 try
                 {
-                    string q = "'%" + txtBuscar.Text + "%'";
+
                     Conexao = new MySqlConnection(data_source);
-                    string sql = "select * from clientes where nome like " + q;
                     Conexao.Open();
-                    MySqlCommand cmd = new MySqlCommand(sql, Conexao);
+
+                    MySqlCommand cmd = new MySqlCommand();
+
+                    cmd.Connection = Conexao;
+
+                    cmd.CommandText = "select * from clientes where nome like @q or morada like @q ";
+
+                    cmd.Parameters.Clear();
+
+                    cmd.Parameters.AddWithValue("@q", "%" + txtBuscar.Text + "%");
+
+
                     MySqlDataReader reader = cmd.ExecuteReader();
+
                     lista_pessoas.Items.Clear();
+
                     while (reader.Read())
                     {
                         string[] row =
@@ -107,19 +160,76 @@ namespace FBD
                         reader.GetString(2),
                         reader.GetString(3),
                     };
-                        var linha_listview = new ListViewItem(row);
 
-                        lista_pessoas.Items.Add(linha_listview);
+                        lista_pessoas.Items.Add(new ListViewItem(row));
+
                     }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Erro " + ex.Number + " ocorreu: " + ex.Message,
+                                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Erro ocorreu: " + ex.Message,
+                                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
                     Conexao.Close();
                 }
+            }
+        }
+
+        private void carregar_pessoas()
+        {
+            try
+            {
+
+                Conexao = new MySqlConnection(data_source);
+                Conexao.Open();
+
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Connection = Conexao;
+
+                cmd.CommandText = "select * from clientes order by id desc ";
+
+                cmd.Parameters.Clear();
+
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                lista_pessoas.Items.Clear();
+
+                while (reader.Read())
+                {
+                    string[] row =
+                    {
+                        reader.GetString(0),
+                        reader.GetString(1),
+                        reader.GetString(2),
+                        reader.GetString(3),
+                    };
+
+                    lista_pessoas.Items.Add(new ListViewItem(row));
+
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro " + ex.Number + " ocorreu: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ocorreu: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Conexao.Close();
             }
         }
 

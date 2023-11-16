@@ -179,7 +179,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Gerenciador de Veiculos";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
