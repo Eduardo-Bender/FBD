@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -39,8 +40,12 @@
             button1 = new Button();
             button2 = new Button();
             lista_pessoas = new ListView();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            toolStripMenuItem1 = new ToolStripMenuItem();
             checkBox1 = new CheckBox();
             comboBox1 = new ComboBox();
+            button3 = new Button();
+            contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -117,7 +122,7 @@
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 8;
-            button1.Text = "Inserir";
+            button1.Text = "Salvar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -133,11 +138,27 @@
             // 
             // lista_pessoas
             // 
+            lista_pessoas.ContextMenuStrip = contextMenuStrip1;
             lista_pessoas.Location = new Point(209, 106);
+            lista_pessoas.MultiSelect = false;
             lista_pessoas.Name = "lista_pessoas";
             lista_pessoas.Size = new Size(495, 116);
             lista_pessoas.TabIndex = 10;
             lista_pessoas.UseCompatibleStateImageBehavior = false;
+            lista_pessoas.ItemSelectionChanged += lista_pessoas_ItemSelectionChanged;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1 });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(110, 26);
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(109, 22);
+            toolStripMenuItem1.Text = "Excluir";
+            toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
             // checkBox1
             // 
@@ -158,13 +179,23 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(121, 23);
             comboBox1.TabIndex = 12;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(29, 199);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 13;
+            button3.Text = "Limpar";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(789, 578);
+            Controls.Add(button3);
             Controls.Add(comboBox1);
             Controls.Add(checkBox1);
             Controls.Add(lista_pessoas);
@@ -181,6 +212,7 @@
             Name = "Form1";
             Text = "Gerenciador de Veiculos";
             Load += Form1_Load;
+            contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -200,5 +232,8 @@
         private ListView lista_pessoas;
         private CheckBox checkBox1;
         private ComboBox comboBox1;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private Button button3;
     }
 }

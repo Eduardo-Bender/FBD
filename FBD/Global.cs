@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 
 namespace FBD
 {
-    class Global
+    public static class Global
     {
         public static MySqlConnection Conexao;
 
@@ -18,9 +18,11 @@ namespace FBD
 
         public static DataTable datTabela;
 
+        public static string data_source = "datasource=localhost;username=root;password=admin;database=bd_fbd";
+
         public static void conectarPrimeiraVez()
         {
-            Conexao = new MySqlConnection("server=localhost;uid=root;pwd=admin");
+            Conexao = new MySqlConnection(data_source);
 
             Conexao.Open();
 

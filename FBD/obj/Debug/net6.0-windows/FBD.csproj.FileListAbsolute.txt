@@ -18,3 +18,4 @@ C:\Users\Eduardo\Desktop\FBD\FBD\obj\Debug\net6.0-windows\refint\FBD.dll
 C:\Users\Eduardo\Desktop\FBD\FBD\obj\Debug\net6.0-windows\FBD.pdb
 C:\Users\Eduardo\Desktop\FBD\FBD\obj\Debug\net6.0-windows\FBD.genruntimeconfig.cache
 C:\Users\Eduardo\Desktop\FBD\FBD\obj\Debug\net6.0-windows\ref\FBD.dll
+C:\Users\Eduardo\Desktop\FBD\FBD\obj\Debug\net6.0-windows\FBD.Properties.Resources.resources
