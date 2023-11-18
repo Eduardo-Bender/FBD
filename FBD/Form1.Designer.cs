@@ -45,6 +45,10 @@
             checkBox1 = new CheckBox();
             comboBox1 = new ComboBox();
             button3 = new Button();
+            btn_salva_veiculo = new Button();
+            label8 = new Label();
+            lista_veiculos = new ListView();
+            txtVeiculo = new DateTimePicker();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -146,6 +150,7 @@
             lista_pessoas.TabIndex = 10;
             lista_pessoas.UseCompatibleStateImageBehavior = false;
             lista_pessoas.ItemSelectionChanged += lista_pessoas_ItemSelectionChanged;
+            lista_pessoas.SelectedIndexChanged += lista_pessoas_SelectedIndexChanged;
             // 
             // contextMenuStrip1
             // 
@@ -174,11 +179,15 @@
             // comboBox1
             // 
             comboBox1.Enabled = false;
+            comboBox1.ForeColor = SystemColors.MenuText;
             comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Gerente", "Mecanico", "Estagiario" });
             comboBox1.Location = new Point(128, 22);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
+            comboBox1.Size = new Size(154, 23);
             comboBox1.TabIndex = 12;
+            comboBox1.Text = "Selecione uma categoria";
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // button3
             // 
@@ -190,11 +199,52 @@
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
+            // btn_salva_veiculo
+            // 
+            btn_salva_veiculo.Enabled = false;
+            btn_salva_veiculo.Location = new Point(113, 294);
+            btn_salva_veiculo.Name = "btn_salva_veiculo";
+            btn_salva_veiculo.Size = new Size(75, 23);
+            btn_salva_veiculo.TabIndex = 22;
+            btn_salva_veiculo.Text = "Salvar";
+            btn_salva_veiculo.UseVisualStyleBackColor = true;
+            btn_salva_veiculo.Click += btn_salva_veiculo_Click;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.Location = new Point(29, 244);
+            label8.Name = "label8";
+            label8.Size = new Size(145, 13);
+            label8.TabIndex = 14;
+            label8.Text = "Data de aquisicao do veiculo";
+            // 
+            // lista_veiculos
+            // 
+            lista_veiculos.Location = new Point(213, 255);
+            lista_veiculos.Name = "lista_veiculos";
+            lista_veiculos.Size = new Size(490, 97);
+            lista_veiculos.TabIndex = 26;
+            lista_veiculos.UseCompatibleStateImageBehavior = false;
+            // 
+            // txtVeiculo
+            // 
+            txtVeiculo.Format = DateTimePickerFormat.Short;
+            txtVeiculo.Location = new Point(29, 265);
+            txtVeiculo.Name = "txtVeiculo";
+            txtVeiculo.Size = new Size(159, 23);
+            txtVeiculo.TabIndex = 27;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(789, 578);
+            Controls.Add(txtVeiculo);
+            Controls.Add(lista_veiculos);
+            Controls.Add(btn_salva_veiculo);
+            Controls.Add(label8);
             Controls.Add(button3);
             Controls.Add(comboBox1);
             Controls.Add(checkBox1);
@@ -235,5 +285,14 @@
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem toolStripMenuItem1;
         private Button button3;
+        private Button button4;
+        private ListView listView1;
+        private Button button5;
+        private Button btn_salva_veiculo;
+        private TextBox textBox1;
+        private Label label5;
+        private Label label8;
+        private ListView lista_veiculos;
+        private DateTimePicker txtVeiculo;
     }
 }

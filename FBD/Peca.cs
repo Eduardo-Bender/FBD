@@ -1,73 +1,67 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
-using MySql.Data.MySqlClient;
 using static FBD.Global;
 
 namespace FBD
 {
-    public class Funcionario
+    public class Peca
     {
         private int id;
-        private string nome;
-        private string morada;
-        private string telefone;
-        private string categoria;
+        private string designacao;
+        private int custo_unitario;
+        private int quantidade_armazem;
 
-        public string Nome
+        public string Designacao
         {
-            get { return nome; }
-            set { nome = value; }
+            get { return designacao; }
+            set { designacao = value; }
         }
 
-        public string Morada
+        public int CustoUnitario
         {
-            get { return morada; }
-            set { morada = value; }
+            get { return custo_unitario; }
+            set { custo_unitario = value; }
         }
 
-        public string Telefone
+        public int QuantidadeArmazem
         {
-            get { return telefone; }
-            set { telefone = value; }
+            get { return quantidade_armazem; }
+            set { quantidade_armazem = value; }
         }
 
-        public Funcionario()
+        public Peca()
         {
             id = 0;
-            nome = string.Empty;
-            morada = string.Empty;
-            telefone = string.Empty;
-            categoria = string.Empty;
+            designacao = string.Empty;
+            custo_unitario = 0;
+            quantidade_armazem = 0;
         }
 
-        public Funcionario(string nome, string morada, string telefone, string categoria)
+        public Peca(string designacao, int custo_unitario, int quantidade_armazem)
         {
-            this.nome = nome;
-            this.morada = morada;
-            this.telefone = telefone;
-            this.categoria = categoria;
+            this.designacao = designacao;
+            this.custo_unitario = custo_unitario;
+            this.quantidade_armazem = quantidade_armazem;
         }
 
-        public void InserirFuncionario()
+        public void InserirPeca()
         {
             try
             {
                 Conexao.Open();
 
-                string query = "INSERT INTO funcionarios (Nome, Morada, Telefone, categoria) VALUES (@Nome, @Morada, @Telefone, @categoria)";
+                string query = "INSERT INTO Pecas (Designacao, Custo_Unitario, Quantidade_Armazem) VALUES (@Designacao, @Custo_Unitario, @Quantidade_Armazem)";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
                 command.Parameters.Clear();
 
-                command.Parameters.AddWithValue("@Nome", Nome);
-                command.Parameters.AddWithValue("@Morada", Morada);
-                command.Parameters.AddWithValue("@Telefone", Telefone);
-                command.Parameters.AddWithValue("@categoria", categoria);
+                command.Parameters.AddWithValue("@Designacao", Designacao);
+                command.Parameters.AddWithValue("@Custo_Unitario", CustoUnitario);
+                command.Parameters.AddWithValue("@Quantidade_Armazem", QuantidadeArmazem);
 
                 command.ExecuteNonQuery();
 
@@ -88,25 +82,23 @@ namespace FBD
             {
                 Conexao.Close();
             }
-
         }
 
-        public void AtualizarFuncionario(int Id)
+        public void AtualizarPeca(int Id)
         {
             try
             {
                 Conexao.Open();
 
-                string query = "UPDATE funcionarios SET Nome = @Nome, Morada = @Morada, Telefone = @Telefone, categoria = @categoria WHERE Id = @Id";
+                string query = "UPDATE Pecas SET Designacao = @Designacao, Custo_Unitario = @Custo_Unitario, Quantidade_Armazem = @Quantidade_Armazem WHERE Id = @Id";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
                 command.Parameters.Clear();
 
                 command.Parameters.AddWithValue("@Id", Id);
-                command.Parameters.AddWithValue("@Nome", Nome);
-                command.Parameters.AddWithValue("@Morada", Morada);
-                command.Parameters.AddWithValue("@Telefone", Telefone);
-                command.Parameters.AddWithValue("@categoria", categoria);
+                command.Parameters.AddWithValue("@Designacao", Designacao);
+                command.Parameters.AddWithValue("@Custo_Unitario", CustoUnitario);
+                command.Parameters.AddWithValue("@Quantidade_Armazem", QuantidadeArmazem);
 
                 command.ExecuteNonQuery();
 
@@ -127,16 +119,15 @@ namespace FBD
             {
                 Conexao.Close();
             }
-
         }
 
-        public void ExcluirFuncionario(int Id)
+        public void ExcluirPeca(int Id)
         {
             try
             {
                 Conexao.Open();
 
-                string query = "DELETE FROM funcionarios WHERE Id = @Id";
+                string query = "DELETE FROM Pecas WHERE Id = @Id";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
                 command.Parameters.Clear();
@@ -146,7 +137,6 @@ namespace FBD
                 command.ExecuteNonQuery();
 
                 MessageBox.Show("Excluído", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
 
             }
             catch (MySqlException ex)
@@ -163,43 +153,36 @@ namespace FBD
             {
                 Conexao.Close();
             }
-
         }
 
-        public void ListaFuncionarios(string t, ListView lista_pessoas)
+        public void ListaPecas(string t, ListView lista_pecas)
         {
             try
             {
                 Conexao.Open();
 
-                string query = "select * from funcionarios where nome like @q or morada like @q or categoria like @q";
+                string query = "select * from pecas where designacao like @q";
                 MySqlCommand cmd = new MySqlCommand(query, Conexao);
-
 
                 cmd.Parameters.Clear();
 
                 cmd.Parameters.AddWithValue("@q", "%" + t + "%");
 
-
-                lista_pessoas.Items.Clear();
+                lista_pecas.Items.Clear();
 
                 MySqlDataReader reader = cmd.ExecuteReader();
-
-                lista_pessoas.Items.Clear();
 
                 while (reader.Read())
                 {
                     string[] row =
                     {
-                        reader.GetString(0),
-                        reader.GetString(1),
-                        reader.GetString(2),
-                        reader.GetString(3),
-                        reader.GetString(4),
-                    };
+                    reader.GetString(0),
+                    reader.GetString(1),
+                    reader.GetString(2),
+                    reader.GetString(3),
+                };
 
-                    lista_pessoas.Items.Add(new ListViewItem(row));
-
+                    lista_pecas.Items.Add(new ListViewItem(row));
                 }
             }
             catch (MySqlException ex)
@@ -218,37 +201,32 @@ namespace FBD
             }
         }
 
-        public void RefrescaFuncionarios(ListView lista_pessoas)
+        public void RefrescaPecas(ListView lista_pecas)
         {
             try
             {
                 Conexao.Open();
 
-                string query = "select * from funcionarios order by id desc ";
+                string query = "select * from pecas order by id desc";
                 MySqlCommand cmd = new MySqlCommand(query, Conexao);
-
 
                 cmd.Parameters.Clear();
 
-                lista_pessoas.Items.Clear();
+                lista_pecas.Items.Clear();
 
                 MySqlDataReader reader = cmd.ExecuteReader();
-
-                lista_pessoas.Items.Clear();
 
                 while (reader.Read())
                 {
                     string[] row =
                     {
-                        reader.GetString(0),
-                        reader.GetString(1),
-                        reader.GetString(2),
-                        reader.GetString(3),
-                        reader.GetString(4),
-                    };
+                    reader.GetString(0),
+                    reader.GetString(1),
+                    reader.GetString(2),
+                    reader.GetString(3),
+                };
 
-                    lista_pessoas.Items.Add(new ListViewItem(row));
-
+                    lista_pecas.Items.Add(new ListViewItem(row));
                 }
             }
             catch (MySqlException ex)
@@ -267,4 +245,5 @@ namespace FBD
             }
         }
     }
+
 }
