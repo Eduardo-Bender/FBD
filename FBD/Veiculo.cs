@@ -80,14 +80,13 @@ namespace FBD
             {
                 Conexao.Open();
 
-                string query = "UPDATE Veiculos SET Data_Aquisicao = @Data_Aquisicao, ID_Cliente = @ID_Cliente WHERE ID_Veiculo = @ID_Veiculo";
+                string query = "UPDATE Veiculos SET Data_Aquisicao = @Data_Aquisicao WHERE ID = @ID_Veiculo";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
                 command.Parameters.Clear();
 
                 command.Parameters.AddWithValue("@ID_Veiculo", idVeiculo);
                 command.Parameters.AddWithValue("@Data_Aquisicao", DataAquisicao.ToString("yyyy-MM-dd"));
-                command.Parameters.AddWithValue("@ID_Cliente", IdCliente);
 
                 command.ExecuteNonQuery();
 
@@ -114,12 +113,12 @@ namespace FBD
             {
                 Conexao.Open();
 
-                string query = "DELETE FROM Veiculos WHERE ID_Veiculo = @ID_Veiculo";
+                string query = "DELETE FROM Veiculos WHERE ID = @ID";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
                 command.Parameters.Clear();
 
-                command.Parameters.AddWithValue("@ID_Veiculo", idVeiculo);
+                command.Parameters.AddWithValue("@ID", idVeiculo);
 
                 command.ExecuteNonQuery();
 
