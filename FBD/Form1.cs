@@ -181,8 +181,11 @@ namespace FBD
             {
                 if (funcionario)
                 {
-                    mostra_id_funcionario = Convert.ToInt32(item.SubItems[0].Text);
-                    txtMostraFunc.Text = mostra_id_funcionario.ToString();
+                    if(lista_pessoas.SelectedItems.Count > 0)
+                    {
+                        mostra_id_funcionario = Convert.ToInt32(item.SubItems[0].Text);
+                        txtMostraFunc.Text = mostra_id_funcionario.ToString();
+                    }
                 }
                 id_contato_selecionado = Convert.ToInt32(item.SubItems[0].Text);
 
@@ -295,15 +298,19 @@ namespace FBD
                 limpa_campos_peca();
                 id_peca_selecionado = null;
             }
-            ListView.SelectedListViewItemCollection pecas_selecionados = lista_pecas.SelectedItems;
-            foreach (ListViewItem item in pecas_selecionados)
+            else
             {
-                mostra_id_peca = Convert.ToInt32(item.SubItems[0].Text);
-                txtMostraPeca.Text = mostra_id_peca.ToString();
-                id_peca_selecionado = Convert.ToInt32(item.SubItems[0].Text);
-                txtPecaDesign.Text = item.SubItems[1].Text;
-                txtPecaUnit.Text = item.SubItems[2].Text;
-                txtPecaArmaz.Text = item.SubItems[3].Text;
+                ListView.SelectedListViewItemCollection pecas_selecionados = lista_pecas.SelectedItems;
+                foreach (ListViewItem item in pecas_selecionados)
+                {
+                    mostra_id_peca = Convert.ToInt32(item.SubItems[0].Text);
+                    txtMostraPeca.Text = mostra_id_peca.ToString();
+                    id_peca_selecionado = Convert.ToInt32(item.SubItems[0].Text);
+                    txtPecaDesign.Text = item.SubItems[1].Text;
+                    txtPecaUnit.Text = item.SubItems[2].Text;
+                    txtPecaArmaz.Text = item.SubItems[3].Text;
+                }
+
             }
             if (mostra_id_funcionario != null && mostra_id_peca != null) btn_salva_trabalho.Enabled = true;
         }

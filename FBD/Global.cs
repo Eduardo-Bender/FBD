@@ -22,7 +22,7 @@ namespace FBD
 
         public static void conectarPrimeiraVez()
         {
-            Conexao = new MySqlConnection(data_source);
+            Conexao = new MySqlConnection("datasource=localhost;username=root;password=admin");
 
             Conexao.Open();
 

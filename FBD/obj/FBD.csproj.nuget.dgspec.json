@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Eduardo\\Desktop\\FBD\\FBD\\FBD.csproj": {}
+    "C:\\Users\\eduar\\Desktop\\FBD\\FBD\\FBD.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Eduardo\\Desktop\\FBD\\FBD\\FBD.csproj": {
+    "C:\\Users\\eduar\\Desktop\\FBD\\FBD\\FBD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Eduardo\\Desktop\\FBD\\FBD\\FBD.csproj",
+        "projectUniqueName": "C:\\Users\\eduar\\Desktop\\FBD\\FBD\\FBD.csproj",
         "projectName": "FBD",
-        "projectPath": "C:\\Users\\Eduardo\\Desktop\\FBD\\FBD\\FBD.csproj",
-        "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Eduardo\\Desktop\\FBD\\FBD\\obj\\",
+        "projectPath": "C:\\Users\\eduar\\Desktop\\FBD\\FBD\\FBD.csproj",
+        "packagesPath": "C:\\Users\\eduar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\eduar\\Desktop\\FBD\\FBD\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\eduar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,6 +39,12 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +64,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
