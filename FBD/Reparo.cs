@@ -77,7 +77,7 @@ namespace FBD
             }
         }
 
-        public void AtualizarMao_de_Obra(int id_reparo)
+        public void AtualizarReparo(int id_reparo)
         {
             try
             {

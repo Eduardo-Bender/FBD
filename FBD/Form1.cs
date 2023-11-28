@@ -33,6 +33,10 @@ namespace FBD
             lista_trabalhos.LabelEdit = true;
             lista_trabalhos.AllowColumnReorder = true;
             lista_trabalhos.FullRowSelect = true;
+            lista_reparos.View = View.Details;
+            lista_reparos.LabelEdit = true;
+            lista_reparos.AllowColumnReorder = true;
+            lista_reparos.FullRowSelect = true;
 
             lista_pessoas.Columns.Add("ID", 30, HorizontalAlignment.Left);
             lista_pessoas.Columns.Add("Nome", 100, HorizontalAlignment.Left);
@@ -52,6 +56,14 @@ namespace FBD
             lista_trabalhos.Columns.Add("Peca", 60, HorizontalAlignment.Left);
             lista_trabalhos.Columns.Add("Tempo", 70, HorizontalAlignment.Left);
             lista_trabalhos.Columns.Add("Custo", 70, HorizontalAlignment.Left);
+
+            lista_reparos.Columns.Add("ID", 30, HorizontalAlignment.Left);
+            lista_reparos.Columns.Add("Cliente", 100, HorizontalAlignment.Left);
+            lista_reparos.Columns.Add("ID Veículo", 100, HorizontalAlignment.Left);
+            lista_reparos.Columns.Add("Data do Reparo", 100, HorizontalAlignment.Left);
+            lista_reparos.Columns.Add("ID Trabalho", 100, HorizontalAlignment.Left);
+            lista_reparos.Columns.Add("Custo Total", 100, HorizontalAlignment.Left);
+
 
         }
 
@@ -142,6 +154,12 @@ namespace FBD
         {
             Peca peca = new Peca();
             peca.RefrescaPecas(lista_pecas);
+        }
+
+        private void carregar_reparos()
+        {
+            Reparo reparo = new Reparo();
+            reparo.RefrescaReparos(lista_reparos);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -401,6 +419,32 @@ namespace FBD
             btn_salva_trabalho.Enabled = false;
             txtMostraFunc.Clear();
             txtMostraPeca.Clear();
+        }
+
+        private void btn_salva_reparo_Click(object sender, EventArgs e)
+        {
+            if (id_reparo_selecionado == null)
+            {
+                Reparo reparo = new Reparo(Convert.ToInt32(id_reparo_selecionado), Convert.ToInt32(txtMostraVeic.Text),
+                    Convert.ToInt32(txtMostraTrab.Text), Convert.ToInt32(txtReparoCustoTotal.Text), dataReparo.Value);
+                reparo.InserirReparo();
+            }
+            else
+            {
+                Reparo reparo = new Reparo(Convert.ToInt32(id_reparo_selecionado), Convert.ToInt32(txtMostraVeic.Text),
+                    Convert.ToInt32(txtMostraTrab.Text), Convert.ToInt32(txtReparoCustoTotal.Text), dataReparo.Value);
+                reparo.AtualizarReparo(Convert.ToInt32(id_reparo_selecionado));
+            }
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            if (id_reparo_selecionado != null)
+            {
+                Reparo reparo = new Reparo();
+                reparo.ExcluirReparo(Convert.ToInt32(id_reparo_selecionado));
+                carregar_reparos();
+            }
         }
     }
 }
