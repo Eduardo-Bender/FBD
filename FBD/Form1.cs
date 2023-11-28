@@ -181,7 +181,7 @@ namespace FBD
             {
                 if (funcionario)
                 {
-                    if(lista_pessoas.SelectedItems.Count > 0)
+                    if (lista_pessoas.SelectedItems.Count > 0)
                     {
                         mostra_id_funcionario = Convert.ToInt32(item.SubItems[0].Text);
                         txtMostraFunc.Text = mostra_id_funcionario.ToString();
