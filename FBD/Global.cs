@@ -75,19 +75,24 @@ namespace FBD
                                        "custo_total int(10))", Conexao);
             Comando.ExecuteNonQuery();
 
-            Comando = new MySqlCommand("DELIMITER // CREATE TRIGGER before_delete_cliente BEFORE DELETE ON Clientes FOR EACH ROW BEGIN    -- Exclua os veículos associados ao cliente    DELETE FROM Veiculos WHERE ID_Cliente = OLD.ID; END; // DELIMITER ; ", Conexao);
+            Comando = new MySqlCommand(" CREATE TRIGGER IF NOT EXISTS before_delete_cliente \r\nBEFORE DELETE\r\nON bd_fbd.Clientes \r\nFOR EACH ROW     " +
+                "\r\n\t-- Exclua os veículos associados ao cliente    \r\nDELETE FROM Veiculos WHERE ID_Cliente = OLD.ID;", Conexao);
             Comando.ExecuteNonQuery();
 
-            Comando = new MySqlCommand("DELIMITER //\r\nCREATE TRIGGER before_delete_veiculo\r\nBEFORE DELETE\r\nON Veiculos FOR EACH ROW\r\nBEGIN\r\n    -- Exclua os reparos associados ao veiculo\r\n    DELETE FROM Reparos WHERE ID_Veiculo = OLD.ID;\r\nEND;\r\n//\r\nDELIMITER ;\r\n", Conexao);
+            Comando = new MySqlCommand(" CREATE TRIGGER IF NOT EXISTS before_delete_veiculo \r\nBEFORE DELETE\r\nON bd_fbd.Veiculos \r\nFOR EACH ROW  " +
+                "\r\n\t-- Exclua os reparos associados ao veiculo     \r\n    DELETE FROM Reparos \r\n    WHERE ID_Veiculo = OLD.ID;", Conexao);
             Comando.ExecuteNonQuery();
 
-            Comando = new MySqlCommand("DELIMITER //\r\nCREATE TRIGGER before_delete_funcionario\r\nBEFORE DELETE\r\nON Funcionarios FOR EACH ROW\r\nBEGIN\r\n    -- Exclua os trabalhos associados ao funcionario\r\n    DELETE FROM mao_de_obra WHERE ID_Funcionario = OLD.trabalho;\r\nEND;\r\n//\r\nDELIMITER ;\r\n", Conexao);
+            Comando = new MySqlCommand(" CREATE TRIGGER IF NOT EXISTS before_delete_funcionario \r\nBEFORE DELETE \r\nON bd_fbd.Funcionarios \r\nFOR EACH ROW      " +
+                "\r\n\t-- Exclua os trabalhos associados ao funcionario     \r\nDELETE FROM mao_de_obra \r\nWHERE ID_Funcionario = OLD.id;", Conexao);
             Comando.ExecuteNonQuery();
 
-            Comando = new MySqlCommand("DELIMITER //\r\nCREATE TRIGGER before_delete_peca\r\nBEFORE DELETE\r\nON pecas FOR EACH ROW\r\nBEGIN\r\n    -- Exclua os trabalhos associados a peca\r\n    DELETE FROM mao_de_obra WHERE ID_Peca = OLD.trabalho;\r\nEND;\r\n//\r\nDELIMITER ;\r\n", Conexao);
+            Comando = new MySqlCommand(" CREATE TRIGGER IF NOT EXISTS before_delete_peca \r\nBEFORE DELETE \r\nON bd_fbd.pecas \r\nFOR EACH ROW      " +
+                "\r\n\t-- Exclua os trabalhos associados a peca     \r\nDELETE FROM mao_de_obra \r\nWHERE ID_Peca = OLD.id;", Conexao);
             Comando.ExecuteNonQuery();
 
-            Comando = new MySqlCommand("DELIMITER //\r\nCREATE TRIGGER before_delete_trabalho\r\nBEFORE DELETE\r\nON mao_de_obra FOR EACH ROW\r\nBEGIN\r\n    -- Exclua os reparos associados ao trabalho\r\n    DELETE FROM Reparos WHERE trabalho = OLD.trabalho;\r\nEND;\r\n//\r\nDELIMITER ;\r\n", Conexao);
+            Comando = new MySqlCommand(" CREATE TRIGGER IF NOT EXISTS before_delete_trabalho \r\nBEFORE DELETE \r\nON bd_fbd.mao_de_obra \r\nFOR EACH ROW      " +
+                "\r\n\t-- Exclua os reparos associados ao trabalho     \r\nDELETE FROM Reparos \r\nWHERE trabalho = OLD.trabalho;", Conexao);
             Comando.ExecuteNonQuery();
 
 

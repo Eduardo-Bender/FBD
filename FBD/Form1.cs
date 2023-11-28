@@ -339,6 +339,8 @@ namespace FBD
                 Peca peca = new Peca();
                 peca.ExcluirPeca(Convert.ToInt32(id_peca_selecionado));
                 carregar_pecas();
+                mostra_id_peca = null;
+                txtMostraPeca.Clear();
             }
         }
 
