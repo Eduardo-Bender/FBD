@@ -5,6 +5,8 @@ namespace FBD
 {
     public partial class Form1 : Form
     {
+        private int? mostra_id_veiculo = null;
+        private int? mostra_id_trabalho = null;
         private int? mostra_id_funcionario = null;
         private int? mostra_id_peca = null;
         private int? id_reparo_selecionado = null;
@@ -45,6 +47,7 @@ namespace FBD
             lista_veiculos.Columns.Add("ID Veiculo", 100, HorizontalAlignment.Left);
             lista_veiculos.Columns.Add("Data de aquisição", 120, HorizontalAlignment.Left);
             lista_veiculos.Columns.Add("Nome do Cliente", 120, HorizontalAlignment.Left);
+            lista_veiculos.Columns.Add("ID Cliente", 70, HorizontalAlignment.Left);
 
             lista_pecas.Columns.Add("ID", 30, HorizontalAlignment.Left);
             lista_pecas.Columns.Add("Designação", 100, HorizontalAlignment.Left);
@@ -76,6 +79,7 @@ namespace FBD
             carregar_veiculos();
             carregar_pecas();
             carregar_trabalhos();
+            carregar_reparos();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -295,7 +299,10 @@ namespace FBD
             {
                 id_veiculo_selecionado = Convert.ToInt32(item.SubItems[0].Text);
                 txtVeiculo.Text = item.SubItems[1].Text;
+                txtMostraVeic.Text = item.SubItems[0].Text;
+                id_contato_selecionado = Convert.ToInt32(item.SubItems[3].Text);
             }
+            if (id_veiculo_selecionado != null && trabalho_mao_de_obra_selecionado != null) btn_salva_reparo.Enabled = true;
         }
 
         private void contextMenuStrip2_Click(object sender, EventArgs e)
@@ -427,16 +434,17 @@ namespace FBD
         {
             if (id_reparo_selecionado == null)
             {
-                Reparo reparo = new Reparo(Convert.ToInt32(id_reparo_selecionado), Convert.ToInt32(txtMostraVeic.Text),
+                Reparo reparo = new Reparo(Convert.ToInt32(id_contato_selecionado), Convert.ToInt32(txtMostraVeic.Text),
                     Convert.ToInt32(txtMostraTrab.Text), Convert.ToInt32(txtReparoCustoTotal.Text), dataReparo.Value);
                 reparo.InserirReparo();
             }
             else
             {
-                Reparo reparo = new Reparo(Convert.ToInt32(id_reparo_selecionado), Convert.ToInt32(txtMostraVeic.Text),
+                Reparo reparo = new Reparo(Convert.ToInt32(id_contato_selecionado), Convert.ToInt32(txtMostraVeic.Text),
                     Convert.ToInt32(txtMostraTrab.Text), Convert.ToInt32(txtReparoCustoTotal.Text), dataReparo.Value);
                 reparo.AtualizarReparo(Convert.ToInt32(id_reparo_selecionado));
             }
+            carregar_reparos();
         }
 
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
@@ -446,6 +454,70 @@ namespace FBD
                 Reparo reparo = new Reparo();
                 reparo.ExcluirReparo(Convert.ToInt32(id_reparo_selecionado));
                 carregar_reparos();
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            txtReparoCustoTotal.Clear();
+            id_reparo_selecionado = null;
+            mostra_id_trabalho = null;
+            mostra_id_veiculo = null;
+            btn_salva_reparo.Enabled = false;
+            txtMostraVeic.Clear();
+            txtMostraTrab.Clear();
+        }
+
+        private void lista_trabalhos_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (lista_trabalhos.SelectedItems.Count == 0)
+            {
+                trabalho_mao_de_obra_selecionado = null;
+                txtMostraTrab.Clear();
+            }
+            else
+            {
+                ListView.SelectedListViewItemCollection trabalhos_selecionados = lista_trabalhos.SelectedItems;
+                foreach (ListViewItem item in trabalhos_selecionados)
+                {
+                    trabalho_mao_de_obra_selecionado = Convert.ToInt32(item.SubItems[0].Text);
+                    mostra_id_trabalho = Convert.ToInt32(item.SubItems[0].Text);
+                    txtMostraTrab.Text = item.SubItems[0].Text;
+                    txtMostraFunc.Text = item.SubItems[1].Text;
+                    txtMostraPeca.Text = item.SubItems[2].Text;
+                    txtTempo.Text = item.SubItems[3].Text;
+                    txtCusto.Text = item.SubItems[4].Text;
+                    btn_salva_trabalho.Enabled = true;
+                }
+
+            }
+            if (id_veiculo_selecionado != null && trabalho_mao_de_obra_selecionado != null) btn_salva_reparo.Enabled = true;
+        }
+
+        private void btn_busca_reparo_Click(object sender, EventArgs e)
+        {
+            Reparo reparo = new Reparo();
+            reparo.ListaReparo(txtBuscaReparo.Text, lista_reparos);
+
+        }
+
+        private void lista_reparos_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (lista_reparos.SelectedItems.Count == 0)
+            {
+                id_reparo_selecionado = null;
+            }
+            else
+            {
+                ListView.SelectedListViewItemCollection reparos_selecionados = lista_reparos.SelectedItems;
+                foreach (ListViewItem item in reparos_selecionados)
+                {
+                    id_reparo_selecionado = Convert.ToInt32(item.SubItems[0].Text);
+                    txtReparoCustoTotal.Text = item.SubItems[5].Text;
+                    txtMostraVeic.Text = item.SubItems[2].Text;
+                    txtMostraTrab.Text = item.SubItems[4].Text;
+                }
+
             }
         }
     }

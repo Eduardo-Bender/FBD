@@ -108,7 +108,7 @@ namespace FBD
             {
                 Conexao.Open();
 
-                string query = "UPDATE Mao_de_Obras SET ID_Funcionario = @idFuncionario, ID_Peca = @idPeca, tempo = @tempo, custo = @custo WHERE trabalho = @trabalho";
+                string query = "UPDATE Mao_de_Obra SET ID_Funcionario = @idFuncionario, ID_Peca = @idPeca, tempo = @tempo, custo = @custo WHERE trabalho = @trabalho";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
                 command.Parameters.Clear();
@@ -146,7 +146,7 @@ namespace FBD
             {
                 Conexao.Open();
 
-                string query = "DELETE FROM Mao_de_Obras WHERE trabalho = @trabalho";
+                string query = "DELETE FROM Mao_de_Obra WHERE trabalho = @trabalho";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
                 command.Parameters.Clear();

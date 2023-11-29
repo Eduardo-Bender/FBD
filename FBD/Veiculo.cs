@@ -145,7 +145,8 @@ namespace FBD
             {
                 Conexao.Open();
 
-                string query = "SELECT Veiculos.ID, Veiculos.Data_Aquisicao, Clientes.Nome FROM Veiculos INNER JOIN Clientes ON Veiculos.ID_Cliente = Clientes.ID WHERE Veiculos.ID_Cliente = @ID_Cliente";
+                string query = "SELECT Veiculos.ID, Veiculos.Data_Aquisicao, Clientes.Nome, Veiculos.ID_Cliente FROM Veiculos INNER JOIN Clientes " +
+                                "ON Veiculos.ID_Cliente = Clientes.ID WHERE Veiculos.ID_Cliente = @ID_Cliente";
                 MySqlCommand cmd = new MySqlCommand(query, Conexao);
 
                 cmd.Parameters.Clear();
@@ -163,6 +164,7 @@ namespace FBD
                     reader.GetString(0),
                     reader.GetDateTime(1).ToString("yyyy-MM-dd"),
                     reader.GetString(2),
+                    reader.GetString(3),
                 };
 
                     lista_veiculos.Items.Add(new ListViewItem(row));
@@ -187,7 +189,7 @@ namespace FBD
             try
             {
                 Conexao.Open();
-                string query = "SELECT Veiculos.ID, Veiculos.Data_Aquisicao, Clientes.Nome " +
+                string query = "SELECT Veiculos.ID, Veiculos.Data_Aquisicao, Clientes.Nome, Veiculos.ID_Cliente " +
                                "FROM Veiculos " +
                                "JOIN Clientes ON Veiculos.ID_Cliente = Clientes.ID " +
                                "ORDER BY Veiculos.ID DESC;"
@@ -210,6 +212,7 @@ namespace FBD
                         reader.GetString(0),
                         reader.GetDateTime(1).ToString("yyyy-MM-dd"),
                         reader.GetString(2),
+                        reader.GetString(3),
                     };
 
                     lista_veiculos.Items.Add(new ListViewItem(row));

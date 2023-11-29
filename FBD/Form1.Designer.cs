@@ -468,6 +468,7 @@
             lista_trabalhos.Size = new Size(705, 192);
             lista_trabalhos.TabIndex = 47;
             lista_trabalhos.UseCompatibleStateImageBehavior = false;
+            lista_trabalhos.ItemSelectionChanged += lista_trabalhos_ItemSelectionChanged;
             // 
             // contextMenuStrip4
             // 
@@ -663,6 +664,7 @@
             button4.TabIndex = 64;
             button4.Text = "Limpar";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // btn_salva_reparo
             // 
@@ -686,6 +688,7 @@
             lista_reparos.Size = new Size(705, 392);
             lista_reparos.TabIndex = 62;
             lista_reparos.UseCompatibleStateImageBehavior = false;
+            lista_reparos.ItemSelectionChanged += lista_reparos_ItemSelectionChanged;
             // 
             // contextMenuStrip5
             // 
@@ -710,6 +713,7 @@
             btn_busca_reparo.TabIndex = 61;
             btn_busca_reparo.Text = "Buscar";
             btn_busca_reparo.UseVisualStyleBackColor = true;
+            btn_busca_reparo.Click += btn_busca_reparo_Click;
             // 
             // txtBuscaReparo
             // 

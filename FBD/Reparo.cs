@@ -43,15 +43,15 @@ namespace FBD
             {
                 Conexao.Open();
 
-                string query = "INSERT INTO reparos (id_cliente, id_veiculo, id_trabalho, data_reparo, custo_total) VALUES (@id_cliente, @id_veiculo, @id_trabalho, " +
+                string query = "INSERT INTO reparos (id_cliente, id_veiculo, trabalho, data_reparo, custo_total) VALUES (@idCliente, @idVeiculo, @idTrabalho, " +
                                 "@data_reparo, @custo_total)";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
                 command.Parameters.Clear();
 
-                command.Parameters.AddWithValue("@id_cliente", idCliente);
-                command.Parameters.AddWithValue("@id_veiculo", idVeiculo);
-                command.Parameters.AddWithValue("@id_trabalho", idTrabalho);
+                command.Parameters.AddWithValue("@idCliente", idCliente);
+                command.Parameters.AddWithValue("@idVeiculo", idVeiculo);
+                command.Parameters.AddWithValue("@idTrabalho", idTrabalho);
                 command.Parameters.AddWithValue("@data_reparo", dataReparo);
                 command.Parameters.AddWithValue("@custo_total", custo);
 
@@ -83,7 +83,7 @@ namespace FBD
             {
                 Conexao.Open();
 
-                string query = "UPDATE reparos SET id_cliente = @id_cliente, id_veiculo = @id_veiculo, id_trabalho = @id_trabalho, " +
+                string query = "UPDATE reparos SET id_cliente = @id_cliente, id_veiculo = @id_veiculo, trabalho = @id_trabalho, " +
                                 "data_reparo = @data_reparo, custo_total = @custo_total WHERE id = @id";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
@@ -123,7 +123,7 @@ namespace FBD
             {
                 Conexao.Open();
 
-                string query = "DELETE FROM reparo WHERE id = @id";
+                string query = "DELETE FROM reparos WHERE id = @id";
                 MySqlCommand command = new MySqlCommand(query, Conexao);
 
                 command.Parameters.Clear();
@@ -159,7 +159,7 @@ namespace FBD
 
                 string query = "select reparos.id, clientes.nome, reparos.id_veiculo, reparos.data_reparo, mao_de_obra.trabalho, reparos.custo_total" +
                                " from reparos INNER JOIN clientes ON reparos.id_cliente = clientes.ID INNER JOIN" +
-                               " veiculos on reparos.id_veiculo = veiculos.ID INNER JOIN mao_de_obra on reparos.id_trabalho = mao_de_obra.trabalho" +
+                               " veiculos on reparos.id_veiculo = veiculos.ID INNER JOIN mao_de_obra on reparos.trabalho = mao_de_obra.trabalho" +
                                " WHERE clientes.Nome like @q";
 
 
@@ -211,7 +211,7 @@ namespace FBD
                 Conexao.Open();
                 string query = "select reparos.id, clientes.nome, reparos.id_veiculo, reparos.data_reparo, mao_de_obra.trabalho, reparos.custo_total" +
                                " from reparos INNER JOIN clientes ON reparos.id_cliente = clientes.ID INNER JOIN" +
-                               " veiculos on reparos.id_veiculo = veiculos.ID INNER JOIN mao_de_obra on reparos.id_trabalho = mao_de_obra.trabalho" +
+                               " veiculos on reparos.id_veiculo = veiculos.ID INNER JOIN mao_de_obra on reparos.trabalho = mao_de_obra.trabalho" +
                                " order by trabalho desc";
 
                 MySqlCommand cmd = new MySqlCommand(query, Conexao);
